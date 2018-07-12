@@ -1,0 +1,6 @@
+https://registration-pal-t5.apps.evans.pal.pivotal.io/users/user1
+https://registration-pal-t5.apps.evans.pal.pivotal.io/accounts?ownerId=user1
+https://registration-pal-t5.apps.evans.pal.pivotal.io/projects?accountId=account1
+https://allocations-pal-t5.apps.evans.pal.pivotal.io/allocations?projectId=project1
+https://backlog-pal-t5.apps.evans.pal.pivotal.io/stories?projectId=project1
+https://timesheets-pal-t5.apps.evans.pal.pivotal.io/time-entries?userId=user1
