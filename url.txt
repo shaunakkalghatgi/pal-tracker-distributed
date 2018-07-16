@@ -25,3 +25,18 @@ curl -i -XPOST -H"Content-Type: application/json" localhost:8081/allocations/ -d
 curl -i -XPOST -H"Content-Type: application/json" localhost:8081/allocations/ -d"{\"projectId\": \"5\", \"userId\": \"4\", \"firstDay\": \"2015-05-17\", \"lastDay\": \"2015-05-18\"}"
 
 curl -i -XPOST -H"Content-Type: application/json" localhost:8081/allocations/ -d"{\"projectId\": \"4\", \"userId\": \"4\", \"firstDay\": \"2015-05-17\", \"lastDay\": \"2015-05-18\"}"
+
+cd ~/workspace/assignment-submission
+./gradlew cloudNativeDeveloperDistributedSystemWithCircuitBreaker \
+    -PregistrationServerUrl=https://registration-pal-t5.apps.evans.pal.pivotal.io \
+    -PbacklogServerUrl=https://backlog-pal-t5.apps.evans.pal.pivotal.io \
+    -PallocationsServerUrl=https://allocations-pal-t5.apps.evans.pal.pivotal.io \
+    -PtimesheetsServerUrl=https://timesheets-pal-t5.apps.evans.pal.pivotal.io
+
+curl 'http://localhost:8999/oauth/token' -i -u 'tracker-client:supersecret' -X POST -H 'Accept: application/json' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials&response_type=token&token_format=opaque'
+
+"9cf4fc32-96d4-40fc-b7a8-29e1b5355a96"
+
+curl localhost:8083 -H"Authorization: Bearer 9cf4fc32-96d4-40fc-b7a8-29e1b5355a96"
+
+curl http://actuator:operations4red@localhost:8081/env
