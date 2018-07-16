@@ -4,3 +4,24 @@ https://registration-pal-t5.apps.evans.pal.pivotal.io/projects?accountId=account
 https://allocations-pal-t5.apps.evans.pal.pivotal.io/allocations?projectId=project1
 https://backlog-pal-t5.apps.evans.pal.pivotal.io/stories?projectId=project1
 https://timesheets-pal-t5.apps.evans.pal.pivotal.io/time-entries?userId=user1
+
+
+./gradlew cloudNativeDeveloperDistributedSystemWithServiceDiscovery \
+    -PregistrationServerUrl=https://registration-pal-t5.apps.evans.pal.pivotal.io \
+    -PbacklogServerUrl=https://backlog-pal-t5.apps.evans.pal.pivotal.io \
+    -PallocationsServerUrl=https://allocations-pal-t5.apps.evans.pal.pivotal.io \
+    -PtimesheetsServerUrl=https://timesheets-pal-t5.apps.evans.pal.pivotal.io
+
+curl -i -XPOST -H"Content-Type: application/json" localhost:8083/projects -d"{\"name\": \"Project A\", \"accountId\": \"3\"}"
+curl -i -XPOST -H"Content-Type: application/json" localhost:8083/projects -d"{\"name\": \"Project B\", \"accountId\": \"3\"}"
+
+
+
+curl -i -XPOST -H"Content-Type: application/json" localhost:8081/allocations/ -d"{\"projectId\": \"${PROJECT_A_ID}\", \"userId\": \"3\", \"firstDay\": \"2015-05-17\", \"lastDay\": \"2015-05-18\"}"
+
+curl -i -XPOST -H"Content-Type: application/json" localhost:8081/allocations/ -d"{\"projectId\": \"4\", \"userId\": \"4\", \"firstDay\": \"2015-05-17\", \"lastDay\": \"2015-05-18\"}"
+
+
+curl -i -XPOST -H"Content-Type: application/json" localhost:8081/allocations/ -d"{\"projectId\": \"5\", \"userId\": \"4\", \"firstDay\": \"2015-05-17\", \"lastDay\": \"2015-05-18\"}"
+
+curl -i -XPOST -H"Content-Type: application/json" localhost:8081/allocations/ -d"{\"projectId\": \"4\", \"userId\": \"4\", \"firstDay\": \"2015-05-17\", \"lastDay\": \"2015-05-18\"}"
