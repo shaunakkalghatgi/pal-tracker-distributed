@@ -40,3 +40,40 @@ curl 'http://localhost:8999/oauth/token' -i -u 'tracker-client:supersecret' -X P
 curl localhost:8083 -H"Authorization: Bearer 9cf4fc32-96d4-40fc-b7a8-29e1b5355a96"
 
 curl http://actuator:operations4red@localhost:8081/env
+
+
+  "client_id": "p-service-registry-f3744bc4-5696-4030-8b62-b230099542db",
+     "client_secret": "PRCdWqsdW1kl",
+
+
+curl -k "https://p-identity.login.sys.evans.pal.pivotal.io/oauth/token" -i -u "aadf5138-1792-4167-989f-3ec72a64ff33:f35f7744-43ed-436b-a23a-753fcf480a55" -X POST -H 'Accept: application/json' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials&response_type=token'
+
+cd ~/workspace/assignment-submission
+./gradlew cloudNativeDeveloperDistributedSystemWithSecurity \
+    -PregistrationServerUrl=https://registration-pal-t5.apps.evans.pal.pivotal.io \
+    -PbacklogServerUrl=https://backlog-pal-t5.apps.evans.pal.pivotal.io \
+    -PallocationsServerUrl=https://allocations-pal-t5.apps.evans.pal.pivotal.io \
+    -PtimesheetsServerUrl=https://timesheets-pal-t5.apps.evans.pal.pivotal.io \
+    -PactuatorUsername=actuator \
+    -PactuatorPassword=operations4red
+
+
+-c "{\"git\": {\"uri\": \"https://github.com/shaunakkalghatgi/tracker-config.git\", \"label\": \"master\"}}"
+
+tracker-allocations    started           1/1         1G       1G     allocations-pal-t5.apps.evans.pal.pivotal.io
+tracker-backlog        started           1/1         1G       1G     backlog-pal-t5.apps.evans.pal.pivotal.io
+tracker-registration   started           1/1         1G       1G     registration-pal-t5.apps.evans.pal.pivotal.io
+tracker-timesheets
+
+cf unset-env tracker-allocations SECURITY_USER_NAME
+cf unset-env tracker-allocations SECURITY_USER_PASSWORD
+
+cf unset-env tracker-backlog   SECURITY_USER_NAME
+cf unset-env tracker-backlog   SECURITY_USER_PASSWORD
+
+cf unset-env tracker-registration SECURITY_USER_NAME
+cf unset-env tracker-registration SECURITY_USER_PASSWORD
+
+cf unset-env tracker-timesheets SECURITY_USER_NAME
+cf unset-env tracker-timesheets SECURITY_USER_PASSWORD
+
